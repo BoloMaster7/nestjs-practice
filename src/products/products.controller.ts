@@ -19,7 +19,7 @@ async getById(@Param('id', new ParseUUIDPipe()) id: string) {
   const prod = await this.productsService.getById(id);
   if (!prod) throw new NotFoundException('Product not found');
   return prod;
-}
+}z
 
 @Delete('/:id')
 async deleteById(@Param('id', new ParseUUIDPipe()) id: string) {
