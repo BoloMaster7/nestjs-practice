@@ -28,13 +28,16 @@ export class OrdersService {
   public async create(
     orderData: Omit<Order, 'id' | 'createdAt' | 'updatedAt'>,
   ): Promise<Order> {
-    const { productId, ...otherData } = orderData;
+    const { clientId,productId, ...otherData } = orderData;
     try {
       return await this.prismaService.order.create({
         data: {
           ...otherData,
           product: {
             connect: { id: productId },
+          },
+          client: {
+            connect: { id: clientId },
           },
         },
       });
@@ -49,13 +52,16 @@ export class OrdersService {
     id: Order['id'],
     orderData: Omit<Order, 'id' | 'createdAt' | 'updatedAt'>,
   ): Promise<Order> {
-    const { productId, ...otherData } = orderData;
+    const { clientId, productId, ...otherData } = orderData;
     return this.prismaService.order.update({
       where: { id },
       data: {
         ...otherData,
         product: {
           connect: { id: productId },
+        },
+        client: {
+          connect: { id: clientId },
         },
       },
     });
